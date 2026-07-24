@@ -5,7 +5,7 @@ declare(strict_types=1);
 define('NORDIC_CONTACT_TESTING', true);
 require __DIR__ . '/../deploy/cpanel/api/contact.php';
 
-assert(NORDIC_CONTACT_TO === 'seoavg@gmail.com');
+assert(NORDIC_CONTACT_TO === 'info@nordicsolutions.ae');
 assert(NORDIC_CONTACT_FROM === 'nordicso@dubai90.server.ae');
 
 $valid = nordic_contact_validate([

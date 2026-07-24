@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-const NORDIC_CONTACT_TO = 'seoavg@gmail.com';
+const NORDIC_CONTACT_TO = 'info@nordicsolutions.ae';
 const NORDIC_CONTACT_FROM = 'nordicso@dubai90.server.ae';
 const NORDIC_CONTACT_FALLBACK_EMAIL = 'info@nordicsolutions.ae';
 const NORDIC_CONTACT_FALLBACK_PHONE = '+971503160500';
