@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<meta name="google-site-verification" content="rsYqkI9ihyhCUZmfOEKyAg0zH7rOtL8pAc6t4KiWjLQ" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "Organization",
+						"name": "Nordic Solutions LLC",
+						"url": "https://nordicsolutions.ae",
+						"email": "info@nordicsolutions.ae",
+						"telephone": "+971503160500",
+						"address": {
+							"@type": "PostalAddress",
+							"streetAddress": "Tawazun Industrial Park, P.O. Box 3640",
+							"addressLocality": "Abu Dhabi",
+							"addressCountry": "AE"
+						}
+					},
+					{
+						"@type": "WebSite",
+						"name": "Nordic Solutions",
+						"alternateName": "nordicsolutions.ae",
+						"url": "https://nordicsolutions.ae/"
+					}
+				]
+			}
+		</script>
+		<script>
+			(() => {
+				const viewport = document.querySelector('meta[name="viewport"]');
+				const defaultViewport = 'width=device-width, initial-scale=1';
+				const minimumViewportWidth = 320;
+				const locale = location.pathname.split('/')[1] === 'ar' ? 'ar' : 'en';
+				let pendingScaleFrame = 0;
+
+				const clearCssScale = () => {
+					document.documentElement.classList.remove('is-sub-320');
+					document.documentElement.style.removeProperty('--app-min-scale');
+				};
+
+				const syncCssScaleFallback = (scale) => {
+					cancelAnimationFrame(pendingScaleFrame);
+
+					pendingScaleFrame = requestAnimationFrame(() => {
+						const layoutViewportWidth = visualViewport?.width || innerWidth;
+
+						if (layoutViewportWidth >= minimumViewportWidth) {
+							clearCssScale();
+							return;
+						}
+
+						document.documentElement.classList.add('is-sub-320');
+						document.documentElement.style.setProperty('--app-min-scale', String(scale));
+					});
+				};
+
+				const syncViewportScale = () => {
+					const viewportWidth = Math.min(
+						innerWidth || minimumViewportWidth,
+						screen.width || minimumViewportWidth
+					);
+
+					if (viewportWidth >= minimumViewportWidth) {
+						viewport?.setAttribute('content', defaultViewport);
+						clearCssScale();
+						return;
+					}
+
+					const scale = viewportWidth / minimumViewportWidth;
+
+					viewport?.setAttribute(
+						'content',
+						`width=${minimumViewportWidth}, initial-scale=${scale}`
+					);
+					syncCssScaleFallback(scale);
+				};
+
+				document.documentElement.lang = locale;
+				document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+				syncViewportScale();
+				addEventListener('resize', syncViewportScale, { passive: true });
+			})();
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

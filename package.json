@@ -1,0 +1,40 @@
+{
+	"name": "nordic-solutions-web",
+	"version": "0.0.1",
+	"devDependencies": {
+		"@eslint/compat": "^2.1.0",
+		"@eslint/js": "^10.0.1",
+		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/kit": "^2.69.2",
+		"@sveltejs/vite-plugin-svelte": "^7.2.0",
+		"@types/node": "^26",
+		"bun-types": "^1.3.14",
+		"eslint": "^10.6.0",
+		"eslint-plugin-svelte": "^3.20.0",
+		"globals": "^17.7.0",
+		"prettier": "^3.9.5",
+		"prettier-plugin-svelte": "^4.1.1",
+		"svelte": "^5.56.4",
+		"svelte-check": "^4.7.2",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.63.0",
+		"vite": "^7.3.1"
+	},
+	"packageManager": "bun@1.3.12",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"build:cpanel": "bun run build && bun scripts/package-cpanel.ts",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test": "bun test",
+		"test:cpanel": "php -d zend.assertions=1 -d assert.exception=1 scripts/test-cpanel-contact.php",
+		"verify": "bun test && bun run test:cpanel && bun run check && bun run lint && bun run build && bun scripts/test-static-seo.ts"
+	},
+	"type": "module"
+}

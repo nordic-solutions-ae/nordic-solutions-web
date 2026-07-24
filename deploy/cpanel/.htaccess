@@ -1,0 +1,42 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<Files ".nordic-release">
+	Require all denied
+</Files>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Avoid an HTTPS loop when a reverse proxy already handled TLS.
+	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+	RewriteCond %{HTTP_HOST} ^www\.nordicsolutions\.ae$ [NC]
+	RewriteRule ^ https://nordicsolutions.ae%{REQUEST_URI} [R=301,L]
+
+	RewriteRule ^copy/?$ / [R=301,L]
+	RewriteRule ^api/contact/?$ api/contact.php [L]
+	RewriteRule ^en/?$ en.html [L]
+	RewriteRule ^ar/?$ ar.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+	Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; upgrade-insecure-requests"
+	Header always set Cross-Origin-Opener-Policy "same-origin"
+	Header always set Cross-Origin-Resource-Policy "same-origin"
+	Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+	Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set X-Frame-Options "DENY"
+
+	<FilesMatch "\.(?:html|xml|txt)$">
+		Header set Cache-Control "no-cache"
+	</FilesMatch>
+
+	<FilesMatch "\.(?:css|js|woff2?)$">
+		Header set Cache-Control "public, max-age=31536000, immutable"
+	</FilesMatch>
+</IfModule>
