@@ -6,7 +6,7 @@ mail-related DNS record.
 
 ## Fixed mail behavior
 
-- Form recipient: `seoavg@gmail.com` (unchanged from the current WordPress form).
+- Form recipient: `info@nordicsolutions.ae`.
 - Sender: `Nordic Solutions Website <nordicso@dubai90.server.ae>`.
 - Reply-To: the visitor's validated email address.
 - Transport: the existing AEserver PHP mail transport.
@@ -59,9 +59,7 @@ Schedule a short quiet window. In cPanel File Manager:
 3. Open `/`, `/en`, and `/ar` in a private browser window.
 4. Check assets, language links, mobile layout, HTTPS, and the `www` redirect.
 5. Submit one clearly labeled test request and confirm it arrives at
-   `seoavg@gmail.com`. Replying to it must target the visitor test address.
-6. Separately verify that Outlook still receives mail at
-   `info@nordicsolutions.ae`.
+   `info@nordicsolutions.ae`. Replying to it must target the visitor test address.
 
 Do not change DNS or Cloudflare during this window. That keeps the website
 switch independent from Microsoft 365 mail.
