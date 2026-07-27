@@ -12,6 +12,10 @@ const requiredFiles = [
 	'index.html',
 	'en.html',
 	'ar.html',
+	'privacy.html',
+	'terms.html',
+	'ar/privacy.html',
+	'ar/terms.html',
 	'sitemap.xml',
 	'.htaccess',
 	'api/contact.php'

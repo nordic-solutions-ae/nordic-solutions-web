@@ -114,6 +114,11 @@
 			return;
 		}
 
+		if (currentPathname !== currentHomeHref) {
+			window.location.assign(resolveDynamic(`${currentHomeHref}#contact`));
+			return;
+		}
+
 		navigationController.scrollToSection(sectionIdFromHref(primaryItem.href));
 	};
 

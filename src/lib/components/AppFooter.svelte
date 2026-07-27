@@ -1,8 +1,10 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve */
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import { contactDetails, getHomeCopy, siteAssetPaths } from '$lib/modules/home/content';
 	import { getCurrentLocaleHomePath, type Locale } from '$lib/modules/i18n';
+	import { getLegalPath, legalLinkLabels } from '$lib/modules/legal/content';
 	import type { NavigationItem } from '$lib/modules/site-navigation';
 
 	type Props = {
@@ -16,6 +18,8 @@
 	const compactNavigation = $derived(navigation.filter((item) => item.key !== 'home'));
 	const copy = $derived(getHomeCopy(locale));
 	const homePath = $derived(getCurrentLocaleHomePath(locale, page.url.pathname));
+	const legalLabels = $derived(legalLinkLabels[locale]);
+	const resolveRoute = resolve as (route: string) => string;
 </script>
 
 <footer class="app-footer">
@@ -80,6 +84,10 @@
 	</div>
 
 	<div class="shell-container app-footer__bottom">
+		<div class="app-footer__legal-links">
+			<a href={resolveRoute(getLegalPath('privacy', locale))}>{legalLabels.privacy}</a>
+			<a href={resolveRoute(getLegalPath('terms', locale))}>{legalLabels.terms}</a>
+		</div>
 		{#if locale === 'ar'}
 			<span>{copy.footer.rights} <bdi dir="ltr">© {currentYear} Nordic Solutions.</bdi></span>
 		{:else}
@@ -211,6 +219,18 @@
 		border-top: 1px solid rgb(255 255 255 / 0.1);
 		color: rgb(240 242 244 / 0.72);
 		font-size: 0.84rem;
+	}
+
+	.app-footer__legal-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.app-footer__legal-links a {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 
 	@media (max-width: 900px) {
