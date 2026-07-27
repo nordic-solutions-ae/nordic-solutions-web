@@ -74,6 +74,10 @@ Open a focused pull request and merge it after CI passes. The merge deploys
 - `/`
 - `/en`
 - `/ar`
+- `/privacy`
+- `/terms`
+- `/ar/privacy`
+- `/ar/terms`
 
 The home page narrative is:
 

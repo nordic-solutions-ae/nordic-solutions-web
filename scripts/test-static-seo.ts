@@ -4,9 +4,55 @@ import { join } from 'node:path';
 const siteUrl = 'https://nordicsolutions.ae';
 const buildRoot = join(import.meta.dirname, '..', 'build');
 const pages = [
-	{ file: 'index.html', attributes: 'lang="en" dir="ltr"', canonical: siteUrl },
-	{ file: 'en.html', attributes: 'lang="en" dir="ltr"', canonical: siteUrl },
-	{ file: 'ar.html', attributes: 'lang="ar" dir="rtl"', canonical: `${siteUrl}/ar` }
+	{
+		file: 'index.html',
+		attributes: 'lang="en" dir="ltr"',
+		canonical: siteUrl,
+		en: siteUrl,
+		ar: `${siteUrl}/ar`
+	},
+	{
+		file: 'en.html',
+		attributes: 'lang="en" dir="ltr"',
+		canonical: siteUrl,
+		en: siteUrl,
+		ar: `${siteUrl}/ar`
+	},
+	{
+		file: 'ar.html',
+		attributes: 'lang="ar" dir="rtl"',
+		canonical: `${siteUrl}/ar`,
+		en: siteUrl,
+		ar: `${siteUrl}/ar`
+	},
+	{
+		file: 'privacy.html',
+		attributes: 'lang="en" dir="ltr"',
+		canonical: `${siteUrl}/privacy`,
+		en: `${siteUrl}/privacy`,
+		ar: `${siteUrl}/ar/privacy`
+	},
+	{
+		file: 'terms.html',
+		attributes: 'lang="en" dir="ltr"',
+		canonical: `${siteUrl}/terms`,
+		en: `${siteUrl}/terms`,
+		ar: `${siteUrl}/ar/terms`
+	},
+	{
+		file: 'ar/privacy.html',
+		attributes: 'lang="ar" dir="rtl"',
+		canonical: `${siteUrl}/ar/privacy`,
+		en: `${siteUrl}/privacy`,
+		ar: `${siteUrl}/ar/privacy`
+	},
+	{
+		file: 'ar/terms.html',
+		attributes: 'lang="ar" dir="rtl"',
+		canonical: `${siteUrl}/ar/terms`,
+		en: `${siteUrl}/terms`,
+		ar: `${siteUrl}/ar/terms`
+	}
 ];
 
 for (const page of pages) {
@@ -18,11 +64,11 @@ for (const page of pages) {
 		`${page.file}: missing canonical`
 	);
 	assert(
-		html.includes(`hreflang="en" href="${siteUrl}"`),
+		html.includes(`hreflang="en" href="${page.en}"`),
 		`${page.file}: missing English alternate`
 	);
 	assert(
-		html.includes(`hreflang="ar" href="${siteUrl}/ar"`),
+		html.includes(`hreflang="ar" href="${page.ar}"`),
 		`${page.file}: missing Arabic alternate`
 	);
 	assert(
@@ -39,3 +85,8 @@ assert(
 	(await Bun.file(join(buildRoot, 'robots.txt')).text()).includes(`${siteUrl}/sitemap.xml`),
 	'robots.txt does not reference sitemap.xml'
 );
+
+const sitemap = await Bun.file(join(buildRoot, 'sitemap.xml')).text();
+for (const path of ['/privacy', '/terms', '/ar/privacy', '/ar/terms']) {
+	assert(sitemap.includes(`${siteUrl}${path}`), `sitemap missing ${path}`);
+}

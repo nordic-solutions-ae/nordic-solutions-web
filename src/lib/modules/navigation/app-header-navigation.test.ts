@@ -35,6 +35,11 @@ describe('app-header navigation helpers', () => {
 		expect(getOppositeLocalePath('ar', '/ar', '#contact')).toBe('/en#contact');
 	});
 
+	test('preserves legal pages when switching languages', () => {
+		expect(getOppositeLocalePath('en', '/privacy')).toBe('/ar/privacy');
+		expect(getOppositeLocalePath('ar', '/ar/terms')).toBe('/terms');
+	});
+
 	test('uses the current visible section on the home route', () => {
 		expect(
 			resolveActiveNavigationSectionId({
