@@ -53,10 +53,6 @@
 			</section>
 		{/each}
 	</div>
-
-	<aside class="legal-page__review-note" aria-label="Legal review note">
-		<strong>{locale === 'ar' ? 'ملاحظة المراجعة: ' : 'Review note: '}</strong>{document.reviewNote}
-	</aside>
 </article>
 
 <style>
@@ -131,20 +127,6 @@
 
 	.legal-page__section li + li {
 		margin-top: 0.45rem;
-	}
-
-	.legal-page__review-note {
-		max-width: 50rem;
-		margin-top: clamp(2.5rem, 6vw, 4rem);
-		padding: 1rem 1.15rem;
-		border: 1px solid color-mix(in srgb, var(--color-accent) 55%, transparent);
-		background: color-mix(in srgb, var(--color-accent) 8%, var(--color-bg-elevated));
-		color: var(--color-text-muted);
-		line-height: var(--line-height-body);
-	}
-
-	.legal-page__review-note strong {
-		color: var(--color-accent-deep);
 	}
 
 	:global(html[dir='rtl']) .legal-page__eyebrow {
