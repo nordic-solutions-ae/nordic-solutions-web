@@ -18,7 +18,6 @@ export type LegalDocument = {
 	intro: string;
 	effectiveDate: string;
 	updatedLabel: string;
-	reviewNote: string;
 	sections: LegalSection[];
 };
 
@@ -35,8 +34,6 @@ const englishDocuments: Record<LegalDocumentKey, LegalDocument> = {
 			'This Privacy Policy explains how Nordic Solutions LLC handles information when you visit this website or contact us through the website form.',
 		effectiveDate,
 		updatedLabel: `Effective ${effectiveDate}`,
-		reviewNote:
-			"This is a practical website policy based on the current implementation and should be checked by the company's legal adviser before being treated as a final legal notice.",
 		sections: [
 			{
 				id: 'who-we-are',
@@ -120,8 +117,6 @@ const englishDocuments: Record<LegalDocumentKey, LegalDocument> = {
 			'These Terms of Use set the basic conditions for using the Nordic Solutions website and its contact form.',
 		effectiveDate,
 		updatedLabel: `Effective ${effectiveDate}`,
-		reviewNote:
-			"This is a practical website notice based on the current implementation and should be checked by the company's legal adviser before being treated as final contractual wording.",
 		sections: [
 			{
 				id: 'website-purpose',
@@ -193,8 +188,6 @@ const arabicDocuments: Record<LegalDocumentKey, LegalDocument> = {
 			'توضح سياسة الخصوصية هذه كيفية تعامل Nordic Solutions LLC مع المعلومات عند زيارة الموقع أو التواصل معنا عبر النموذج.',
 		effectiveDate,
 		updatedLabel: `سارية من ${effectiveDate}`,
-		reviewNote:
-			'هذه صياغة عملية مبنية على التطبيق الحالي للموقع، ويجب مراجعتها من مستشار قانوني للشركة قبل اعتمادها كإشعار قانوني نهائي.',
 		sections: [
 			{
 				id: 'who-we-are',
@@ -276,8 +269,6 @@ const arabicDocuments: Record<LegalDocumentKey, LegalDocument> = {
 			'تحدد شروط الاستخدام هذه القواعد الأساسية لاستخدام موقع Nordic Solutions ونموذج التواصل الخاص به.',
 		effectiveDate,
 		updatedLabel: `سارية من ${effectiveDate}`,
-		reviewNote:
-			'هذه صياغة عملية مبنية على التطبيق الحالي للموقع، ويجب مراجعتها من مستشار قانوني للشركة قبل اعتمادها كصياغة تعاقدية نهائية.',
 		sections: [
 			{
 				id: 'website-purpose',
