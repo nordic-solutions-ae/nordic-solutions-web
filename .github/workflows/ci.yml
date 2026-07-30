@@ -90,7 +90,7 @@ jobs:
             ftp_run 'cat public_html/.nordic-release;'
           }
 
-          for required in index.html en.html ar.html privacy.html terms.html ar/privacy.html ar/terms.html .htaccess api/contact.php; do
+          for required in index.html en.html ar.html privacy.html terms.html .htaccess api/contact.php; do
             test -f "dist/cpanel/$required"
           done
 
@@ -142,9 +142,7 @@ jobs:
 
           for url in \
             'https://nordicsolutions.ae/privacy' \
-            'https://nordicsolutions.ae/terms' \
-            'https://nordicsolutions.ae/ar/privacy' \
-            'https://nordicsolutions.ae/ar/terms'; do
+            'https://nordicsolutions.ae/terms'; do
             curl --fail --silent --show-error --retry 3 --retry-all-errors \
               --max-time 20 "$url" > /dev/null
           done

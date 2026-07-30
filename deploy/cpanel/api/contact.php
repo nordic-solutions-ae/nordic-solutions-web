@@ -53,6 +53,11 @@ function nordic_contact_string(array $payload, string $field): string
 	return isset($payload[$field]) && is_string($payload[$field]) ? $payload[$field] : '';
 }
 
+function nordic_contact_terms_accepted(array $payload): bool
+{
+	return ($payload['termsAccepted'] ?? null) === true;
+}
+
 function nordic_contact_validate(mixed $payload): array
 {
 	$payload = is_array($payload) ? $payload : [];
@@ -86,6 +91,10 @@ function nordic_contact_validate(mixed $payload): array
 		$errors['message'] = 'Add a brief scope, timeline, or support need.';
 	} elseif (nordic_contact_length($values['message']) > 1200) {
 		$errors['message'] = 'Keep the message under 1200 characters.';
+	}
+
+	if (!nordic_contact_terms_accepted($payload)) {
+		$errors['termsAccepted'] = 'Accept the Terms of Use and Privacy Policy before sending your enquiry.';
 	}
 
 	return ['values' => $values, 'errors' => $errors];

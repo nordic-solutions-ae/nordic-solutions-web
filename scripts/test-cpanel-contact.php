@@ -13,6 +13,7 @@ $valid = nordic_contact_validate([
 	'email' => ' HELLO@Example.com ',
 	'organization' => ' Nordic   Solutions ',
 	'message' => " Scope \r\n\r\n\r\n details. ",
+	'termsAccepted' => true,
 ]);
 
 assert($valid['errors'] === []);
@@ -33,6 +34,7 @@ assert($invalid['errors'] === [
 	'name' => 'Provide your name.',
 	'email' => 'Use a valid work email address.',
 	'message' => 'Add a brief scope, timeline, or support need.',
+	'termsAccepted' => 'Accept the Terms of Use and Privacy Policy before sending your enquiry.',
 ]);
 
 $rateLimitFile = sys_get_temp_dir() . '/nordic-contact-test-' . bin2hex(random_bytes(8)) . '.json';

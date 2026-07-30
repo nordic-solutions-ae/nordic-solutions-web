@@ -1,7 +1,10 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-navigation-without-resolve */
+	import { resolve } from '$app/paths';
 	import { Button, FormField, TextInput, Textarea } from '$lib/components/ui';
 	import { contactDetails, getHomeCopy } from '$lib/modules/home/content';
 	import type { Locale } from '$lib/modules/i18n';
+	import { getLegalPath, legalLinkLabels } from '$lib/modules/legal/content';
 	import {
 		type ContactFormErrors,
 		type ContactFormValues,
@@ -20,7 +23,8 @@
 		name: '',
 		email: '',
 		organization: '',
-		message: ''
+		message: '',
+		termsAccepted: false
 	};
 
 	let values = $state<ContactFormValues>({ ...defaultValues });
@@ -29,6 +33,8 @@
 	let submitStatus = $state<ContactSubmissionResponse['state'] | 'idle' | 'submitting'>('idle');
 	let statusMessage = $state('');
 	const copy = $derived(getHomeCopy(locale));
+	const legalLabels = $derived(legalLinkLabels[locale]);
+	const resolveRoute = resolve as (route: string) => string;
 	const localizedErrors = $derived.by<ContactFormErrors>(() => {
 		if (locale !== 'ar') {
 			return errors;
@@ -40,7 +46,8 @@
 					name: 'يرجى إدخال الاسم.',
 					email: 'يرجى إدخال بريد عمل صالح.',
 					organization: 'يرجى تقصير اسم المؤسسة.',
-					message: 'يرجى إضافة موجز قصير عن النطاق أو التوقيت أو الحاجة.'
+					message: 'يرجى إضافة موجز قصير عن النطاق أو التوقيت أو الحاجة.',
+					termsAccepted: copy.contact.consent.error
 				};
 
 				return [field, messages[field as keyof ContactFormValues]];
@@ -71,6 +78,19 @@
 		};
 
 		clearFieldError(field);
+		submitStatus = 'idle';
+		statusMessage = '';
+	};
+
+	const handleTermsChange = (event: Event) => {
+		const target = event.currentTarget;
+
+		if (!(target instanceof HTMLInputElement)) {
+			return;
+		}
+
+		values = { ...values, termsAccepted: target.checked };
+		clearFieldError('termsAccepted');
 		submitStatus = 'idle';
 		statusMessage = '';
 	};
@@ -273,6 +293,31 @@
 					></Textarea>
 				</FormField>
 
+				<div class="contact-section__consent">
+					<input
+						id="contact-terms"
+						name="termsAccepted"
+						type="checkbox"
+						required
+						checked={values.termsAccepted}
+						aria-invalid={Boolean(localizedErrors.termsAccepted) || undefined}
+						aria-describedby={localizedErrors.termsAccepted ? 'contact-terms-error' : undefined}
+						onchange={handleTermsChange}
+					/>
+					<label for="contact-terms">
+						{copy.contact.consent.prefix}<a href={resolveRoute(getLegalPath('terms'))}
+							>{legalLabels.terms}</a
+						>{copy.contact.consent.between}<a href={resolveRoute(getLegalPath('privacy'))}
+							>{legalLabels.privacy}</a
+						>.
+					</label>
+					{#if localizedErrors.termsAccepted}
+						<p id="contact-terms-error" class="contact-section__consent-error" role="alert">
+							{localizedErrors.termsAccepted}
+						</p>
+					{/if}
+				</div>
+
 				<div class="contact-section__honeypot" aria-hidden="true">
 					<label for="contact-website">Website</label>
 					<input
@@ -434,6 +479,32 @@
 		overflow: hidden;
 		clip-path: inset(50%);
 		white-space: nowrap;
+	}
+
+	.contact-section__consent {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: start;
+		gap: 0.65rem;
+		color: var(--color-text-muted);
+		font-size: var(--font-size-small);
+	}
+
+	.contact-section__consent input {
+		width: 1rem;
+		height: 1rem;
+		margin: 0.2rem 0 0;
+		accent-color: var(--color-accent);
+	}
+
+	.contact-section__consent a {
+		color: var(--color-link);
+	}
+
+	.contact-section__consent-error {
+		grid-column: 2;
+		margin: -0.25rem 0 0;
+		color: var(--color-danger);
 	}
 
 	.contact-section__status {

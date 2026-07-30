@@ -20,10 +20,10 @@ DirectoryIndex index.html
 	RewriteRule ^api/contact/?$ api/contact.php [L]
 	RewriteRule ^en/?$ en.html [L]
 	RewriteRule ^ar/?$ ar.html [L]
+	RewriteRule ^ar/privacy/?$ /privacy [R=301,L]
+	RewriteRule ^ar/terms/?$ /terms [R=301,L]
 	RewriteRule ^privacy/?$ privacy.html [L]
 	RewriteRule ^terms/?$ terms.html [L]
-	RewriteRule ^ar/privacy/?$ ar/privacy.html [L]
-	RewriteRule ^ar/terms/?$ ar/terms.html [L]
 </IfModule>
 
 <IfModule mod_headers.c>

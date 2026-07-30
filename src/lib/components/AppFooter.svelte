@@ -85,8 +85,8 @@
 
 	<div class="shell-container app-footer__bottom">
 		<div class="app-footer__legal-links">
-			<a href={resolveRoute(getLegalPath('privacy', locale))}>{legalLabels.privacy}</a>
-			<a href={resolveRoute(getLegalPath('terms', locale))}>{legalLabels.terms}</a>
+			<a href={resolveRoute(getLegalPath('privacy'))}>{legalLabels.privacy}</a>
+			<a href={resolveRoute(getLegalPath('terms'))}>{legalLabels.terms}</a>
 		</div>
 		{#if locale === 'ar'}
 			<span>{copy.footer.rights} <bdi dir="ltr">© {currentYear} Nordic Solutions.</bdi></span>
