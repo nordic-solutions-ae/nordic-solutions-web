@@ -28,7 +28,7 @@ unzip -l dist/nordic-solutions-cpanel.zip
 ```
 
 The upload artifact is `dist/nordic-solutions-cpanel.zip`. It contains the
-seven prerendered pages, static assets, security and route rules in `.htaccess`,
+five prerendered pages, static assets, security and route rules in `.htaccess`,
 and `api/contact.php`.
 
 If PHP is available, run the contact validation and rate-limit check without

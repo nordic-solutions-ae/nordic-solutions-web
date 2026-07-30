@@ -3,10 +3,11 @@ export type ContactFormValues = {
 	email: string;
 	organization: string;
 	message: string;
+	termsAccepted: boolean;
 };
 
 export type ContactFormErrors = Partial<
-	Record<'name' | 'email' | 'organization' | 'message', string>
+	Record<'name' | 'email' | 'organization' | 'message' | 'termsAccepted', string>
 >;
 
 export type ContactFormValidationResult = {
@@ -34,7 +35,8 @@ export const contactFormFieldOrder: Array<keyof ContactFormValues> = [
 	'name',
 	'email',
 	'organization',
-	'message'
+	'message',
+	'termsAccepted'
 ];
 
 const WORK_EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -69,7 +71,8 @@ const normalizeValues = (values: ContactFormValues): ContactFormValues => {
 		name: normalizeSingleLineValue(values.name),
 		email: email.toLowerCase(),
 		organization: normalizeSingleLineValue(values.organization),
-		message: normalizeMessageValue(values.message)
+		message: normalizeMessageValue(values.message),
+		termsAccepted: values.termsAccepted === true
 	};
 };
 
@@ -99,6 +102,11 @@ export const validateContactForm = (input: ContactFormValues): ContactFormValida
 		errors.message = 'Add a brief scope, timeline, or support need.';
 	} else if (values.message.length > MAX_MESSAGE_LENGTH) {
 		errors.message = `Keep the message under ${MAX_MESSAGE_LENGTH} characters.`;
+	}
+
+	if (!values.termsAccepted) {
+		errors.termsAccepted =
+			'Accept the Terms of Use and Privacy Policy before sending your enquiry.';
 	}
 
 	return {

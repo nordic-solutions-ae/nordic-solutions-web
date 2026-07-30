@@ -105,6 +105,11 @@ export type HomeCopy = {
 			address: string;
 		};
 		formContext: string;
+		consent: {
+			prefix: string;
+			between: string;
+			error: string;
+		};
 		fields: {
 			name: { label: string; helper: string; placeholder: string };
 			email: { label: string; helper: string; placeholder: string };
@@ -376,6 +381,11 @@ const englishHomeCopy: HomeCopy = {
 		},
 		formContext:
 			'Qualified project, partnership, and implementation enquiries. Keep sensitive detail for direct channels.',
+		consent: {
+			prefix: 'I have read and accept the ',
+			between: ' and ',
+			error: 'Accept the Terms of Use and Privacy Policy before sending your enquiry.'
+		},
 		fields: {
 			name: {
 				label: 'Name',
@@ -609,6 +619,11 @@ export const homeCopy: Record<Locale, HomeCopy> = {
 			},
 			formContext:
 				'استفسارات المشاريع والشراكات والتنفيذ المؤهلة. يرجى إبقاء التفاصيل الحساسة للقنوات المباشرة.',
+			consent: {
+				prefix: 'أقر بأنني قرأت وأوافق على ',
+				between: ' و',
+				error: 'يرجى الموافقة على شروط الاستخدام وسياسة الخصوصية قبل إرسال الاستفسار.'
+			},
 			fields: {
 				name: {
 					label: 'الاسم',

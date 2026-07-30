@@ -29,29 +29,13 @@ const pages = [
 		file: 'privacy.html',
 		attributes: 'lang="en" dir="ltr"',
 		canonical: `${siteUrl}/privacy`,
-		en: `${siteUrl}/privacy`,
-		ar: `${siteUrl}/ar/privacy`
+		en: `${siteUrl}/privacy`
 	},
 	{
 		file: 'terms.html',
 		attributes: 'lang="en" dir="ltr"',
 		canonical: `${siteUrl}/terms`,
-		en: `${siteUrl}/terms`,
-		ar: `${siteUrl}/ar/terms`
-	},
-	{
-		file: 'ar/privacy.html',
-		attributes: 'lang="ar" dir="rtl"',
-		canonical: `${siteUrl}/ar/privacy`,
-		en: `${siteUrl}/privacy`,
-		ar: `${siteUrl}/ar/privacy`
-	},
-	{
-		file: 'ar/terms.html',
-		attributes: 'lang="ar" dir="rtl"',
-		canonical: `${siteUrl}/ar/terms`,
-		en: `${siteUrl}/terms`,
-		ar: `${siteUrl}/ar/terms`
+		en: `${siteUrl}/terms`
 	}
 ];
 
@@ -67,10 +51,12 @@ for (const page of pages) {
 		html.includes(`hreflang="en" href="${page.en}"`),
 		`${page.file}: missing English alternate`
 	);
-	assert(
-		html.includes(`hreflang="ar" href="${page.ar}"`),
-		`${page.file}: missing Arabic alternate`
-	);
+	if ('ar' in page) {
+		assert(
+			html.includes(`hreflang="ar" href="${page.ar}"`),
+			`${page.file}: missing Arabic alternate`
+		);
+	}
 	assert(
 		html.includes('name="google-site-verification"'),
 		`${page.file}: missing Search Console tag`
@@ -87,6 +73,6 @@ assert(
 );
 
 const sitemap = await Bun.file(join(buildRoot, 'sitemap.xml')).text();
-for (const path of ['/privacy', '/terms', '/ar/privacy', '/ar/terms']) {
+for (const path of ['/privacy', '/terms']) {
 	assert(sitemap.includes(`${siteUrl}${path}`), `sitemap missing ${path}`);
 }

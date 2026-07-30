@@ -26,7 +26,7 @@ export const getOppositeLocalePath = (locale: Locale, pathname: string, hash = '
 	const legalPath = pathname.replace(/^\/ar(?=\/|$)/, '').replace(/^\/en(?=\/|$)/, '');
 
 	if (legalPath === '/privacy' || legalPath === '/terms') {
-		return `${nextLocale === 'ar' ? `/ar${legalPath}` : legalPath}${hash}`;
+		return `${nextLocale === 'ar' ? '/ar' : '/'}${hash}`;
 	}
 
 	const homePath = nextLocale === 'ar' ? '/ar' : pathname.startsWith('/ar') ? '/en' : '/';

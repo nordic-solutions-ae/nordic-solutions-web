@@ -35,9 +35,9 @@ describe('app-header navigation helpers', () => {
 		expect(getOppositeLocalePath('ar', '/ar', '#contact')).toBe('/en#contact');
 	});
 
-	test('preserves legal pages when switching languages', () => {
-		expect(getOppositeLocalePath('en', '/privacy')).toBe('/ar/privacy');
-		expect(getOppositeLocalePath('ar', '/ar/terms')).toBe('/terms');
+	test('returns to the localized home page when switching from legal pages', () => {
+		expect(getOppositeLocalePath('en', '/privacy')).toBe('/ar');
+		expect(getOppositeLocalePath('ar', '/ar/terms')).toBe('/');
 	});
 
 	test('uses the current visible section on the home route', () => {

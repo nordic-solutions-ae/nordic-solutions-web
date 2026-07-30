@@ -1,18 +1,14 @@
 <script lang="ts">
 	import { getLegalPath, type LegalDocument } from './content';
-	import type { Locale } from '$lib/modules/i18n';
 
 	type Props = {
 		document: LegalDocument;
-		locale: Locale;
 	};
 
-	let { document, locale }: Props = $props();
+	let { document }: Props = $props();
 	const siteUrl = 'https://nordicsolutions.ae';
-	const canonicalPath = $derived(getLegalPath(document.key, locale));
+	const canonicalPath = $derived(getLegalPath(document.key));
 	const canonicalUrl = $derived(`${siteUrl}${canonicalPath}`);
-	const englishUrl = $derived(`${siteUrl}${getLegalPath(document.key, 'en')}`);
-	const arabicUrl = $derived(`${siteUrl}${getLegalPath(document.key, 'ar')}`);
 </script>
 
 <svelte:head>
@@ -21,11 +17,10 @@
 	<meta property="og:title" content={`${document.title} | Nordic Solutions`} />
 	<meta property="og:description" content={document.description} />
 	<meta property="og:url" content={canonicalUrl} />
-	<meta property="og:locale" content={locale === 'ar' ? 'ar_AE' : 'en_AE'} />
+	<meta property="og:locale" content="en_AE" />
 	<link rel="canonical" href={canonicalUrl} />
-	<link rel="alternate" hreflang="en" href={englishUrl} />
-	<link rel="alternate" hreflang="ar" href={arabicUrl} />
-	<link rel="alternate" hreflang="x-default" href={englishUrl} />
+	<link rel="alternate" hreflang="en" href={canonicalUrl} />
+	<link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 </svelte:head>
 
 <article class="legal-page" aria-labelledby="legal-title">
@@ -40,15 +35,29 @@
 		{#each document.sections as section (section.id)}
 			<section class="legal-page__section" aria-labelledby={`legal-${section.id}`}>
 				<h2 id={`legal-${section.id}`}>{section.heading}</h2>
-				{#each section.paragraphs as paragraph, paragraphIndex (paragraphIndex)}
-					<p>{paragraph}</p>
-				{/each}
-				{#if section.bullets}
-					<ul>
-						{#each section.bullets as bullet, bulletIndex (bulletIndex)}
-							<li>{bullet}</li>
-						{/each}
-					</ul>
+				{#if section.content}
+					{#each section.content as block, blockIndex (blockIndex)}
+						{#if 'paragraph' in block}
+							<p>{block.paragraph}</p>
+						{:else}
+							<ul>
+								{#each block.bullets as bullet, bulletIndex (bulletIndex)}
+									<li>{bullet}</li>
+								{/each}
+							</ul>
+						{/if}
+					{/each}
+				{:else}
+					{#each section.paragraphs ?? [] as paragraph, paragraphIndex (paragraphIndex)}
+						<p>{paragraph}</p>
+					{/each}
+					{#if section.bullets}
+						<ul>
+							{#each section.bullets as bullet, bulletIndex (bulletIndex)}
+								<li>{bullet}</li>
+							{/each}
+						</ul>
+					{/if}
 				{/if}
 			</section>
 		{/each}
